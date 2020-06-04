@@ -15,7 +15,12 @@ func GetInput() (string, *Buyer) {
 	reader := bufio.NewReader(os.Stdin)
 	phone := ReadInput("Your phone: +", reader, validatePhone)
 	email := ReadInput("Your email: ", reader, validateEmail)
-	notifyType := ReadInput("Which notification channel to send. \n1 (phone), 2 (email), 3 (both): ", reader, validateChanelType)
+	notifyType := ReadInput(
+		"Which notification channel to send. \n"+
+			"1 (phone), 2 (email), 3 (both): ",
+		reader,
+		validateChanelType)
+
 	c := &Buyer{
 		phone: "+" + phone,
 		email: email,
@@ -36,7 +41,7 @@ func validatePhone(text string) bool {
 
 func validateEmail(text string) bool {
 	var alpaNum = `[a-zA-Z0-9\.]{1,}`
-	re := regexp.MustCompile(alpaNum + `@` + alpaNum + `\.[a-zA-Z]`)
+	re := regexp.MustCompile(alpaNum + `@` + alpaNum + `\.[a-zA-Z]{1,3}`)
 	return re.MatchString(text)
 }
 
